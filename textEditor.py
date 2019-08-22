@@ -30,7 +30,6 @@ class TextEditor:
         if self.location == "no_file":
             self.save_as_file()
         else:
-            print(self.location)
             f = open(self.location, "w+")
             textsave = self.text_area.get(1.0, END)
             f.write(textsave)
@@ -63,7 +62,7 @@ class TextEditor:
     def __init__(self, win):
         self.win = win
         win.title("Text Editor")
-        self.text_area = Text(self.master, undo=True)
+        self.text_area = Text(self.win, undo=True, font=)
         self.text_area.pack(fill=BOTH, expand=1)
         self.main_menu = Menu()
         self.win.config(menu=self.main_menu)
