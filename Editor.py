@@ -1,7 +1,11 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
+import tkinter.font as tkFont
 from PIL import Image, ImageTk
+import os
+import time
+import pyautogui as pg
 
 
 class Menubar:
@@ -23,6 +27,20 @@ class Menubar:
         self.open_button = Button(self.toolbar, image=self.open_eimg, relief=FLAT,
                                   command=parent.open_file, border=0, bg="#1A1A1A", cursor="hand2")
         self.open_button.pack(side=LEFT, padx=6, pady=8)
+
+        self.save_img = Image.open("Images/save.png")
+        self.save_img = self.save_img.resize((40, 40), Image.ANTIALIAS)
+        self.save_eimg = ImageTk.PhotoImage(self.save_img)
+        self.save_button = Button(self.toolbar, image=self.save_eimg, relief=FLAT,
+                                  command=parent.save, border=0, bg="#1A1A1A", cursor="hand2")
+        self.save_button.pack(side=LEFT, padx=6, pady=8)
+
+        self.empty_img = Image.open("Images/empty.png")
+        self.empty_img = self.empty_img.resize((40, 50), Image.ANTIALIAS)
+        self.empty_eimg = ImageTk.PhotoImage(self.empty_img)
+        self.empty_button = Button(self.toolbar, image=self.empty_eimg, relief=FLAT,
+                                   border=0, bg="#1A1A1A")
+        self.empty_button.pack(side=LEFT, padx=6, pady=8)
 
         self.cut_img = Image.open("Images/scissors.png")
         self.cut_img = self.cut_img.resize((30, 30), Image.ANTIALIAS)
@@ -59,12 +77,41 @@ class Menubar:
                                   command=parent.redo, border=0, bg="#1A1A1A", cursor="hand2")
         self.redo_button.pack(side=LEFT, padx=6, pady=8)
 
-        self.save_img = Image.open("Images/save.png")
-        self.save_img = self.save_img.resize((40, 40), Image.ANTIALIAS)
-        self.save_eimg = ImageTk.PhotoImage(self.save_img)
-        self.save_button = Button(self.toolbar, image=self.save_eimg, relief=FLAT,
-                                  command=parent.save, border=0, bg="#1A1A1A", cursor="hand2")
-        self.save_button.pack(side=LEFT, padx=6, pady=8)
+        self.empty_img = Image.open("Images/empty.png")
+        self.empty_img = self.empty_img.resize((40, 50), Image.ANTIALIAS)
+        self.empty_eimg = ImageTk.PhotoImage(self.empty_img)
+        self.empty_button = Button(self.toolbar, image=self.empty_eimg, relief=FLAT,
+                                   border=0, bg="#1A1A1A")
+        self.empty_button.pack(side=LEFT, padx=6, pady=8)
+
+        self.empty_img = Image.open("Images/empty.png")
+        self.empty_img = self.empty_img.resize((40, 50), Image.ANTIALIAS)
+        self.empty_eimg = ImageTk.PhotoImage(self.empty_img)
+        self.empty_button = Button(self.toolbar, image=self.empty_eimg, relief=FLAT,
+                                   border=0, bg="#1A1A1A")
+        self.empty_button.pack(side=LEFT, padx=6, pady=8)
+
+        self.bold_img = Image.open("Images/bold.png")
+        self.bold_img = self.bold_img.resize((25, 30), Image.ANTIALIAS)
+        self.bold_eimg = ImageTk.PhotoImage(self.bold_img)
+        self.bold_button = Button(self.toolbar, image=self.bold_eimg, relief=FLAT,
+                                  border=0, bg="#1A1A1A", cursor="hand2")
+        self.bold_button.pack(side=LEFT, padx=6, pady=8)
+
+        self.italics_img = Image.open("Images/italics.png")
+        self.italics_img = self.italics_img.resize((20, 25), Image.ANTIALIAS)
+        self.italics_eimg = ImageTk.PhotoImage(self.italics_img)
+        self.italics_button = Button(self.toolbar, image=self.italics_eimg, relief=FLAT,
+                                     border=0, bg="#1A1A1A", cursor="hand2")
+        self.italics_button.pack(side=LEFT, padx=6, pady=8)
+
+        self.underline_img = Image.open("Images/underline.png")
+        self.underline_img = self.underline_img.resize(
+            (25, 35), Image.ANTIALIAS)
+        self.underline_eimg = ImageTk.PhotoImage(self.underline_img)
+        self.underline_button = Button(self.toolbar, image=self.underline_eimg, relief=FLAT,
+                                       border=0, bg="#1A1A1A", cursor="hand2")
+        self.underline_button.pack(side=LEFT, padx=6, pady=8)
 
 
 class TextEditor:
@@ -82,15 +129,12 @@ class TextEditor:
 
         self.mbar = Menubar(self)
 
-        line_number_bar = Text(win, width=5, padx=3, takefocus=0,  border=0,
-                               background='DarkOliveGreen1', state='disabled',  wrap='none')
-        line_number_bar.pack(side='left',  fill=BOTH)
+        self.line_number_bar = Text(win, width=5, padx=3, takefocus=0,  border=0,
+                                    background='DarkOliveGreen1', state='disabled',  wrap='none')
+        self.line_number_bar.pack(side='left',  fill=BOTH)
 
         self.text_area = Text(self.win, undo=1, bg="#212121", fg="white")
         self.text_area.pack(fill=BOTH, expand=1)
-
-        cursor_info_bar = Label(self.text_area, text='Line: 1 | Column: 1')
-        cursor_info_bar.pack(expand='no', fill=None, side='right', anchor='se')
 
         # Main menu
 
